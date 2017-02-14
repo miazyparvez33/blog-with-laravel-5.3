@@ -45,4 +45,50 @@ class BlogController extends Controller
     }
 
 
+    public function edit($id)
+    {
+     
+     $blog = Blog::findOrFail($id);
+
+    return view('blog.edit',compact('blog'));
+
+    }
+
+
+    public function update(Request $request,$id)
+    {
+     
+     $input = $request->all();
+     $blog = Blog::findOrFail($id);
+
+       
+       //var_dump($input);
+
+       $blog->update($input);
+
+    return back();
+
+    }
+
+        public function destroy(Request $request,$id)
+    {
+     
+     $blog = Blog::findOrFail($id);
+
+     $blog->delete($request->all());
+
+      return redirect('/blog/bin');
+
+    }
+
+    public function bin()
+    {
+
+      $deletedblog = Blog::onlyTrashed()->get();
+
+      return view('blog.bin',compact('deletedblog'));
+
+
+    }
+
 }

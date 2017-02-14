@@ -10,13 +10,13 @@
  	
 
  	<div class="jumbotron">
- 		<h1>Latest Blog Post</h1>
+ 		<h1>Deleted Blog Post</h1>
  	</div>
 <div class="col-sm-8 col-sm-offset-2 ">
- 	@foreach ($blogs as $key => $blog)
+ 	@foreach ($deletedblog as $key => $blog)
 
  	<article>
-		   <h1><a href="{{ action('BlogController@show',[$blog->id]) }}">{{ $blog->title }}</a></h1>
+		   <h1>{{ $blog->title }}</h1>
  			<p>{{ $blog->body }}</p>
  	</article>
     @endforeach
