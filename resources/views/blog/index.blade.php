@@ -18,13 +18,15 @@
  	<article>
 		   <h1><a href="{{ action('BlogController@show',[$blog->id]) }}">{{ $blog->title }}</a></h1>
  			<p>{{ $blog->body }}</p>
+
+
  	</article>
     @endforeach
 	
  </div>
 </div>
 
- 
+
 	
 </main>
 

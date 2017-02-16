@@ -12,6 +12,8 @@
 */
 
 Route::get('/blog/bin', 'BlogController@bin');
+Route::get('/blog/bin/{id}', 'BlogController@restore');
+Route::delete('/blog/bin/{id}/destroyblog', 'BlogController@destroyblog');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,4 +28,7 @@ Route::get('/blog/{id}', 'BlogController@show');
 Route::get('/blog/{id}/edit', 'BlogController@edit');
 Route::patch('/blog/{id}', 'BlogController@update');
 Route::delete('/blog/{id}', 'BlogController@destroy');
+
+
+
 
