@@ -3,6 +3,7 @@
 @section('content')
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 
 <div class="container-fluid">
 	
@@ -14,6 +15,12 @@
  	<div class="col-sm-10 col-sm-offset-1">
 
  	 {!! Form::open([ 'method' => 'post' , 'action'=> 'BlogController@store' ]) !!}
+
+
+ 	       <div class="form-group">
+       {!! Form::label("category_id","Category:") !!}
+       {!! Form::select("category_id[]",$category,null,['id'=>'tag_list','class' => 'form-control']) !!}
+      </div>
        
       <div class="form-group">
        {!! Form::label("title","Title:") !!}
@@ -35,9 +42,9 @@
 
 	
  </div>
-
-
- 
-	
+@include('partials.select-2-script');
 </main>
+
+	
+
  @endsection

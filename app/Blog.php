@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
+
 class Blog extends Model
 {
 
@@ -12,6 +14,12 @@ class Blog extends Model
 
    protected $date =['deleted_at'];	
    protected $fillable = ['title','body'];
+
+   public function category()
+   {
+   return $this->belongsToMany(Category::class);
+   }
+
 
     
 }

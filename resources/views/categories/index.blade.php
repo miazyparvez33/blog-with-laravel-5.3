@@ -10,17 +10,15 @@
  	
 
  	<div class="jumbotron">
- 		<h1>Latest Blog Post</h1>
+ 		<h1>Blog Categories</h1>
  	</div>
 <div class="col-sm-8 col-sm-offset-2 ">
- 	@foreach ($blogs as $blog)
+ 	@foreach ($categories as  $category)
 
- 	<article>
-		   <h1><a href="{{ action('BlogController@show',[$blog->id]) }}">{{ $blog->title }}</a></h1>
- 			<p>{{ $blog->body }}</p>
+    @if($category->blog->count() > 0)
+          <li><a href="{{ route('categories.show',$category->slug) }}">{{ $category->name }}</a></li>
+    @endif
 
-
- 	</article>
     @endforeach
 	
  </div>

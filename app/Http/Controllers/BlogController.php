@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Blog;
+use App\Category;
 
 class BlogController extends Controller
 {
-    //
+
+    public function __construct()
+  {
+    //$this->middleware('auth',['only'=>'index']);
+    //$this->middleware('auth',['except'=>'index','show']);
+    $this->middleware('admin',['except'=>['index','show']]);
+  }
+    
 
   public function index()
   {
@@ -19,16 +27,25 @@ class BlogController extends Controller
 
  public function create()
  {
-   return view('blog.create');
+
+  $category = Category::pluck('name','id');
+   return view('blog.create',compact('category'));
  }
 
  public function store(Request $request)
  {
    $input = $request->all();
    
-       //var_dump($input);
+       
 
-   Blog::create($input);
+
+
+   $blog=Blog::create($input);
+
+   if($categoryIds = $request->category_id){
+
+    $blog->category()->sync($categoryIds);
+   }
 
    return redirect('/blog');
    
@@ -48,9 +65,9 @@ class BlogController extends Controller
  public function edit($id)
  {
    
+   $category = Category::pluck('name','id');
    $blog = Blog::findOrFail($id);
-
-   return view('blog.edit',compact('blog'));
+   return view('blog.edit',compact('blog','category'));
 
  }
 
@@ -62,7 +79,10 @@ class BlogController extends Controller
    $blog = Blog::findOrFail($id);
 
    
-       //var_dump($input);
+     if($categoryIds = $request->category_id){
+
+    $blog->category()->sync($categoryIds);
+   }
 
    $blog->update($input);
 
@@ -74,7 +94,9 @@ class BlogController extends Controller
  {
    
    $blog = Blog::findOrFail($id);
+   $categoryIds = $request->category_id;
 
+   $blog->category()->detach($categoryIds);
    $blog->delete($request->all());
 
    return redirect('/blog/bin');
