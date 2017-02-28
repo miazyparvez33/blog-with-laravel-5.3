@@ -11,7 +11,7 @@
  		<h1>Create a  Category</h1>
  	</div>
 
- 	<div class="col-sm-10 col-sm-offset-1">
+ 	<div class="col-sm-8">
 
  	 {!! Form::open([ 'method' => 'post' , 'action'=> 'CategoryController@store' ]) !!}
        
@@ -29,6 +29,36 @@
      {!! Form::close() !!}
  		
  	</div>
+
+<div class="col-sm-4">
+
+  <h1 class="page-header">Recent Categories</h1>
+  
+  <div class="table-responsive">
+  	  <table class="table table-striped">
+  	    <thead>
+  	    	<tr>
+  	    		<th>Name</th>
+  	    		
+  	
+  	    	</tr>
+  	    </thead>
+  	    <tbody>
+  	         
+  	               @foreach ($categories as  $category)
+                <tr>
+                     <th><a href="{{ route('categories.show',$category->slug) }}">{{ $category->name }}</a></th>
+
+  	              	
+  	           </tr>
+  	              @endforeach
+  	    </tbody>
+
+  	  	
+  	  </table>
+  </div>
+	
+</div>
 
 	
  </div>

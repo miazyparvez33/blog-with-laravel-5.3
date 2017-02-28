@@ -34,7 +34,7 @@
 
 		          <div class="form-group">
 			     
-	     {!! Form::submit("Delete Category",['class' => 'btn btn-danger']) !!}
+	               {!! Form::submit("Delete Category",['class' => 'btn btn-danger']) !!}
 			     </div>
 
              {!! Form::close() !!}

@@ -14,7 +14,8 @@
  	</div>
 
 
- 	<h2 class="text-center"><strong>
+ 	<h2 class="text-center">
+ 	<strong>
  		Recent Blog on {{ $category->name }}
  	</strong>
  		
@@ -26,7 +27,7 @@
  
 		   
  		
-   <li><a href="{{ action('BlogController@show',[$blog->id])}}">{{ $blog->title }}</a></li>
+   <li><a href="{{ action('BlogController@show',[$blog->slug])}}">{{ $blog->title }}</a></li>
 
 
 

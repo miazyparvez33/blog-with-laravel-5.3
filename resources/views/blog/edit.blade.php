@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+@include('partials.tinymce');
 
 <div class="container-fluid">
 	
@@ -13,10 +13,10 @@
 
  	<div class="col-sm-10 col-sm-offset-1">
 
- 	 {!! Form::model($blog,[ 'method' => 'PATCH' , 'action'=> ['BlogController@update',$blog->id ]]) !!}
+ 	 {!! Form::model($blog,[ 'method' => 'PATCH' , 'action'=> ['BlogController@update',$blog->id],'files'=>true ]) !!}
 
  	
-       
+           @include('partials.error-message');  <!--for show error message-->
       <div class="form-group">
        {!! Form::label("category_id","Category:") !!}
        {!! Form::select("category_id[]",$category,null,['id'=>'tag_list','class' => 'form-control']) !!}
@@ -30,6 +30,16 @@
 	     <div class="form-group">
 	       {!! Form::label("body","Body:") !!}
 	       {!! Form::textarea("body",null,['class' => 'form-control']) !!}
+	     </div>
+	     
+	     <div class="form-group">
+	       {!! Form::label("photo_id","Featured Image:") !!}
+	       {!! Form::file("photo_id",null,['class' => 'form-control']) !!}
+	     </div>
+
+	           <div class="form-group">
+	       {!! Form::label("meta_desc","Meta Description:") !!}
+	       {!! Form::text("meta_desc",null,['class' => 'form-control']) !!}
 	     </div>
 
 	     <div class="form-group">
