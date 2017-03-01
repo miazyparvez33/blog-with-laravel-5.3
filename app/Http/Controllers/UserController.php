@@ -57,9 +57,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($username)
     {
-        //
+        $user = User::whereUsername($username)->first();
+
+        return view('users.show',['user'=>$user]);
     }
 
     /**
@@ -86,7 +88,7 @@ class UserController extends Controller
        $user = User::findOrFail($id);
        $user->update($input);
 
-       return redirect('users');
+       return back();
     }
 
     /**

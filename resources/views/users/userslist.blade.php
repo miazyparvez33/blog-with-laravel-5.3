@@ -35,7 +35,7 @@
   	         
   	               @foreach ($users as  $user)
                 <tr>
-                     <th>{{$user->name }}</th>
+                     <th><a href="{{ route('users.show',$user->username) }}">{{$user->name }}</a></th>
                      <th>{{$user->email}}</th>
                      <th>{{$user->created_at->diffForHumans()}}</th>
                      <th>

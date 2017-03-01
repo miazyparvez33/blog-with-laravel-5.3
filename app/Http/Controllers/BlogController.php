@@ -17,7 +17,8 @@ class BlogController extends Controller
   {
     //$this->middleware('auth',['only'=>'index']);
     //$this->middleware('auth',['except'=>'index','show']);
-    $this->middleware('admin',['except'=>['index','show']]);
+    $this->middleware('both',['except'=>['create','store','edit','update']]);
+    $this->middleware('admin',['only'=>['publish','destroy','bin','destroyblog','restore']]);
   }
     
 
