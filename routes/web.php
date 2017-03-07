@@ -1,6 +1,7 @@
 <?php
 
  View::share('blog',App\Blog::all()); 
+ View::share('user',App\User::all()); 
  View::share('categories',App\Category::latest()->get()); 
 
 

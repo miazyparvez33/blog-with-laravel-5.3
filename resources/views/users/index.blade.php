@@ -9,21 +9,34 @@
 	
  	
 
- 	<div class="jumbotron">
- 		<h1> Hello {{ Auth::user()->name}} </h1>
- 	</div>
+ 	  <div class="jumbotron col-sm-12">
+    <div class="col-sm-8">
+         <h1> Hello, {{ Auth::user()->name }}</h1>
+         <p>{{ Auth::user()->role->name}}</p>
+
+        @if(Auth::user()->role->id == 2)
+         <button class="btn btn-primary info btn-xs"><a style="color:#fff" href="{{ url('/blog/create') }}">Create Blog</a></button>
+         @endif
+         <button class="btn btn-success info btn-xs"><a style="color:#fff" href="{{ action('UserController@edit',[Auth::user()->username])}}">Profile Settings</a></button>
+    </div>
+    <div class="col-sm-4">
+       <br>
+       <img class="img-circle" height="150px" width="150px" src="/images/{{ Auth::user()->photo ? Auth::user()->photo->photo:'default.png' }}"> 
+    </div>
+  </div>
 
 <div class="col-sm-8 col-sm-offset-2 admin-buttons">
 
-<button class="btn btn-primary link"><a style="color:#fff" href="{{ url('/blog/create') }}">Create Blog</a></button>
+
 <button class="btn btn-success link"><a style="color:#fff" href="{{ url('/categories/create') }}">Categories</a></button>
+
 </div>
 
 </div>
 
 <div class="col-sm-12">
 
-  <h1 class="page-header">Latest Blogs</h1>
+  <h1>Latest Blogs</h1>
 
   @if($user = Auth::user())
 

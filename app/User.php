@@ -14,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role_id','username',
+        'name', 'email', 'password','role_id','username','about','website','facebook','twitter','github','photo_id',
     ];
 
     /**
@@ -36,7 +36,12 @@ class User extends Authenticatable
     {
 
         return $this->hasMany(Blog::class);
-    }   
+    }
+
+  public function photo()
+   {
+   return $this->belongsTo(Photo::class);
+   }   
 
 
 }

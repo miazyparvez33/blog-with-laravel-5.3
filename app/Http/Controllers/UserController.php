@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use App\Photo;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -70,9 +73,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($username)
     {
-        //
+       $user = User::whereUsername($username)->first();
+
+        return view('users.edit',['user'=>$user]);
     }
 
     /**
@@ -82,11 +87,58 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $username)
     {
+
+
+     $rules = [
+              'photo_id'=>['mimes:jpeg,jpg,png','max:100'],
+              'name'=>['min:1','max:32'],
+              'about'=>['min:20','max:1024'],
+              ];
+
+      $message = [
+       
+         'photo_id.mimes' => 'Your Image Must Be jpeg,jpg or png',
+         'photo_id.max' => 'Your Image Should Not Be Larger Then 100kb',
+
+      ];
+
+
+     $this->validate($request,$rules,$message);
+
+
        $input = $request->all();
-       $user = User::findOrFail($id);
+       $user = User::whereUsername($username)->first();
+
+
+
+      if(Auth::user()->id == $user->id)
+      {
+
+
+           if($file = $request->file('photo_id'))
+           {
+
+            if($user->photo)
+                {
+
+                  unlink('images/' .$user->photo->photo);
+                  $user->photo()->delete('photo');
+                }
+
+
+            $name =$file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['photo' => $name, 'title'=>$name]);
+            $input['photo_id'] = $photo->id;
+           }
+      }
+     
+
        $user->update($input);
+
+       notify()->flash('<h2> Great! Your Profile Hasbeen Updated </h2>','success',['timer'=>2500]);
 
        return back();
     }
@@ -99,6 +151,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrfail($id);
+
+        $user->delete();
+     notify()->flash('<h2> You Have Just Deleted a User </h2>','success',['timer'=>2500]);
+        return back();
     }
 }

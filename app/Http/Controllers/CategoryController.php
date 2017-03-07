@@ -38,6 +38,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        $rules = [
+         'name'=>['required','unique:categories'],
+        ];
+
+         $this->validate($request, $rules);
+
+
         $category = new Category;
         $category->name = $request->name;
         $category->slug = str_slug($request->name);
@@ -107,6 +115,6 @@ class CategoryController extends Controller
          $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect('categories');
+        return redirect('categories/create');
     }
 }

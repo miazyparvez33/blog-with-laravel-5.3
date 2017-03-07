@@ -16,9 +16,13 @@
  	 {!! Form::open([ 'method' => 'post' , 'action'=> 'CategoryController@store' ]) !!}
        
       <div class="form-group">
+        @include('partials.error-message');  <!--for show error message-->
+
+
        {!! Form::label("name","Name:") !!}
        {!! Form::text("name",null,['class' => 'form-control']) !!}
       </div>
+
       
 
 
@@ -38,7 +42,8 @@
   	  <table class="table table-striped">
   	    <thead>
   	    	<tr>
-  	    		<th>Name</th>
+            <th>Name</th>
+  	    		<th>Action</th>
   	    		
   	
   	    	</tr>
@@ -48,6 +53,16 @@
   	               @foreach ($categories as  $category)
                 <tr>
                      <th><a href="{{ route('categories.show',$category->slug) }}">{{ $category->name }}</a></th>
+                     <th>
+                            {!! Form::open([ 'method' => 'DELETE' , 'action'=> ['CategoryController@destroy',$category->id ]]) !!}
+
+              <div class="form-group">
+           
+                 {!! Form::submit("Delete",['class' => 'btn btn-danger btn-xs']) !!}
+           </div>
+
+             {!! Form::close() !!}
+                     </th>
 
   	              	
   	           </tr>

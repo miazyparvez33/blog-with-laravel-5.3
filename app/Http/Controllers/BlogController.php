@@ -72,10 +72,8 @@ class BlogController extends Controller
    {
 
     $name =$file->getClientOriginalName();
-
     $file->move('images',$name);
     $photo = Photo::create(['photo' => $name, 'title'=>$name]);
-
     $input['photo_id'] = $photo->id;
    }
    

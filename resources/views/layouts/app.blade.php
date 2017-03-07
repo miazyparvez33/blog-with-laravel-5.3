@@ -69,8 +69,9 @@
            @endif
 
                        </li>
+                       @if(Auth::user())
                        <li><a href="{{ url('/users') }}">Profile</a></li>
-                    
+                      @endif
                       @if(Auth::user() ? Auth::user()->role->id ===1 : '')
                        <li><a href="{{ url('/admin') }}">Admin</a></li>
                       @endif

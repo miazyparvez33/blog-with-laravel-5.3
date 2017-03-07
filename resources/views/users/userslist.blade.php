@@ -41,15 +41,25 @@
                      <th>
                     
                     
-                     {!! Form::model($user,[ 'method' => 'PATCH' , 'action'=> ['UserController@update',$user->id ]]) !!}
+              {!! Form::model($user,[ 'method' => 'PATCH' , 'action'=> ['UserController@update',$user->id ]]) !!}
 
 				      {!! Form::select("role_id",['1'=>'Administrator','2'=>'Subscriber','3'=>'Author'],null,['class'=>'btn btn-primary btn-xs']) !!}
 					     </th>
-               <th>
-			              {!! Form::submit("Update",['class' => 'btn btn-success btn-xs']) !!}
-					    
-
+                    <th>
+			              {!! Form::submit("Update",['class' => 'btn btn-success btn-xs']) !!} 
                      {!! Form::close() !!}
+                   
+                      
+
+
+         {!! Form::open([ 'method' => 'DELETE' , 'action'=> ['UserController@destroy',$user->id ]]) !!}
+
+              <div class="form-group">
+           
+       {!! Form::submit("Delete",['class' => 'btn btn-danger btn-xs']) !!}
+           </div>
+
+             {!! Form::close() !!}
                     </th>
   	              	
   	           </tr>
