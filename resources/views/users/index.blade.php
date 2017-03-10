@@ -25,16 +25,16 @@
     </div>
   </div>
 
-<div class="col-sm-8 col-sm-offset-2 admin-buttons">
+<!-- <div class="col-sm-8 col-sm-offset-2 admin-buttons">
 
 
 <button class="btn btn-success link"><a style="color:#fff" href="{{ url('/categories/create') }}">Categories</a></button>
 
-</div>
+</div> -->
 
 </div>
 
-<div class="col-sm-12">
+<div class="col-sm-7">
 
   <h1>Latest Blogs</h1>
 
@@ -68,6 +68,12 @@
 
 	
 </div>
+
+ <div class="col-sm-5">
+
+   @include('partials.user-sidebar');
+     
+ </div>
 
 
 	

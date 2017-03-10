@@ -75,6 +75,8 @@
                       @if(Auth::user() ? Auth::user()->role->id ===1 : '')
                        <li><a href="{{ url('/admin') }}">Admin</a></li>
                       @endif
+
+                      <li><a href="{{ url('/contact') }}">Contact</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

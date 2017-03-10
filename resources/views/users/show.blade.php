@@ -13,6 +13,13 @@
     <div class="col-sm-8">
          <h1> Hello, {{ $user->name }}</h1>
           <p>{{ Auth::user()->role->name}}</p>
+
+           @if($user->blog->count() > 0 ) 
+
+           <button class="btn btn-primary btn-xs">{{  $user->blog->count()  }} Blogs</button>
+
+           @endif
+
     </div>
  		<div class="col-sm-4">
        <br>
@@ -24,103 +31,55 @@
 
 
 
-<div class="col-sm-6">
-
-  <h1>Latest Blogs</h1>
+<div class="col-sm-7">
 
 
 
-     @if($user->blog)
 
-       <ul> 
-           @foreach($blog as $blog)
+  @if($user->blog->count() > 0 ) 
+
+     <h1>Latest Blogs  By <small><a href="{{ route('users.show',$user->username)}}">{{ $user->name}}</a></small></h1>
+
+     <hr>
+      
+           @foreach($user->blog as $blog)
+
+
+            <h2><a href="{{ action('BlogController@show',[$blog->slug]) }}">{{ $blog->title }}</a></h2>
+
+
+          {!! str_limit( $blog->body,200)!!} <a class="btn btn-primary btn-xs" href="{{ action('BlogController@show',[$blog->slug]) }}">Read More</a>
+
+
+          <p> 
 
 
 
-             <li style="list-style-type: none">
-               <button class="btn btn-success btn-xs">{{ $blog->status==0 ? 'Draft' : 'Published' }}</button>
-           <a href="{{ action('BlogController@show',[$blog->slug]) }}">{{ $blog->title }} </a>
-           </li>
-    
+              Posted <strong>{{$blog->created_at->diffForHumans()}}</strong>
+
+       @if($blog->category)
+
+          @foreach($blog->category as $category ) <i class="fa fa-btn fa-cubes"></i>
+                     <a href="{{ route('categories.show',$category->slug) }}"> {{$category->name}}</a>
+          @endforeach
+       @endif
+          </p>
+
 
             @endforeach
 
-            <br>
 
-       </ul>
 
-     
-
-          
-        
-      
-     @endif
+  @endif
 
 
 
   
 </div>
 
- <div class="col-sm-6">
+ <div class="col-sm-5">
 
-     @if($user->about)
-
-       <div >
-            <h2>About</h2>
-            <hr>
-            <p>{{ $user->about }}</p>
-       </div>
-
-     @endif
-
-
-        <div>
-            <h2>URL</h2>
-            <hr>
-           <a href=" http://{{ $user->username }}">larablog.com/ {{ $user->username }}</a>
-       </div>
-
-
-          @if($user->website)
-
-       <div>
-            <h2>Website</h2>
-            <hr>
-           <a href=" {{ $user->website }}"> {{ $user->website }}</a>
-       </div>
-
-     @endif
-
-
-          @if($user->facebook || $user->twitter || $user->github )
-
-       <div>
-            <h2>Get Social</h2>
-             <hr>
-            
-                <ol class="list-unstyled">
-                    @if($user->facebook) 
-                    <li><a href="{{ $user->facebook}}">{{ $user->facebook}}</a></li>
-                    @endif
-                </ol>
-
-                <ol class="list-unstyled">
-                    @if($user->twitter) 
-                    <li><a href="{{ $user->twitter}}">{{ $user->twitter}}</a></li>
-                    @endif
-                </ol>
-                  
-                <ol class="list-unstyled">
-                    @if($user->github) 
-                    <li><a href="{{ $user->github}}">{{ $user->github}}</a></li>
-                    @endif
-                </ol>
-           
-
-            
-       </div>
-
-     @endif
+@include('partials.user-sidebar');
      
  </div>
 

@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+  public function __construct()
+  {
+   
+    $this->middleware('admin',['only'=>['userslist']]);
+  }
     /**
      * Display a listing of the resource.
      *
@@ -77,7 +83,17 @@ class UserController extends Controller
     {
        $user = User::whereUsername($username)->first();
 
-        return view('users.edit',['user'=>$user]);
+        if(Auth::user()->id == $user->id){
+
+
+
+        return view('users.edit',['user'=>$user]); 
+        }
+
+        else{
+            return 'Insufficient Permission';
+        }
+
     }
 
     /**

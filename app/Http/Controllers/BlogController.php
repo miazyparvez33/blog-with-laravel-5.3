@@ -8,7 +8,9 @@ use App\Category;
 use App\Photo;
 use Carbon\Carbon;
 use Session;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -22,12 +24,39 @@ class BlogController extends Controller
   }
     
 
-  public function index()
+ //  public function index()
+ //  {
+
+ //   $blogs = Blog::where('status',1)->latest()->paginate(6); 
+ //   return view('blog.index',compact('blogs'));
+ // }
+
+   public function index(Request $request)
   {
 
-   $blogs = Blog::where('status',0)->latest()->get(); 
-   return view('blog.index',compact('blogs'));
+ 
+
+     $blogs = Blog::where(function($query) use ($request){
+     
+         if($term = $request->get('term')){
+        
+        $query ->orWhere('title','like', '%'. $term .'%');
+
+         }
+
+
+     })
+     ->orderby('id',"desc")
+     ->paginate('3');
+
+
+    return view('blog.index',compact('blogs'));
+  
+
+
+   
  }
+
 
  public function create()
  {
@@ -87,6 +116,7 @@ class BlogController extends Controller
    }
 
    // Session::flash('flash_message','You Have Just Created a Blog');
+ 
 
 
    notify()->flash('<h2> You Have Successfully Created a Blog </h2>','success',['timer'=>2500]);
